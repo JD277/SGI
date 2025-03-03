@@ -89,7 +89,7 @@ def mostrar_resumen(datos):
 
 def menu():
     fecha_hora = fecha()
-    menu = ['Reportes de Agua', 'Reportes de Salud', 'Reportes de Electricidad']  # Eliminé la opción "Ver Reportes"
+    menu = ['Reportes de Agua', 'Reportes de Salud', 'Reportes de Electricidad', "Calendario de Reportes"]  # Eliminé la opción "Ver Reportes", (Angel: Añadí la opción ver calendario)
     st.sidebar.title(':blue-background[Menu de Reportes]')
     choice = st.sidebar.selectbox('Seleccione una opción', menu, index=0)
     
@@ -107,3 +107,7 @@ def menu():
         
     elif choice == 'Reportes de Electricidad':
         generar_reporte('Electricidad', ['Seleccione...','Apagon', 'Interrupciones Intermitentes' ,'Baja Tension', 'Sobrecargas', 'Caida de Poste', 'Caida de Cableado', 'Caida de Transformador', 'Averias en el Alumbrado Publico'])
+    
+    elif choice == 'Calendario de Reportes':
+        from Calendario import mostrar_calendario
+        mostrar_calendario() # Añadidura de la muestra del calendario
