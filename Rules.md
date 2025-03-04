@@ -304,15 +304,15 @@ Siempre cerrar figuras después de guardar
    - Configurar Firebase SDK
    - Copia el fragmento de código proporcionado e intégralo en tu aplicación.
 
-   -Habilitar Servicios Adicionales (Opcional)
+   - Habilitar Servicios Adicionales (Opcional)
    - Habilita servicios como Firestore, Authentication, Storage, etc.
 
 ## 3. Estructura de la Base de Datos
     
-###3.1 Como se Organizan los datos:
+### 3.1 Como se Organizan los datos:
  
-####Correcto: 
--Estructura Organizada:
+#### Correcto: 
+- Estructura Organizada:
 
 /usuarios
   /usuario1
@@ -328,7 +328,7 @@ Siempre cerrar figuras después de guardar
       "correo": "maria@example.com"
     }
 
-####Incorrecto:
+#### Incorrecto:
 
 -Estructura plana y desorganizada:
 
