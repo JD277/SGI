@@ -468,6 +468,7 @@ async def add_user(user_data):
 
 #1 General:
 
+
 ## 1.1 Descripción:Es una biblioteca de Python diseñada para la manipulación y análisis de datos. Proporciona estructuras de datos 
 flexibles y eficientes, como DataFrames y Series, que facilitan la limpieza, transformación y análisis de datos
 de manera intuitiva.
