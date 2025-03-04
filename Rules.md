@@ -352,19 +352,19 @@ Siempre cerrar figuras después de guardar
 
   ##### Estrategias:
 
-  Usar colecciones y documentos.
+ - Usar colecciones y documentos.
 
-  Evitar documentos demasiado grandes. 
+  -Evitar documentos demasiado grandes. 
  
-  Indexar campos clave.
+  -Indexar campos clave.
 
-  Estructura relacional vs. no relacional.
+  -Estructura relacional vs. no relacional.
   
-  Denormalización.
+  -Denormalización.
   
-  Consulta limitada.
+  -Consulta limitada.
  
-  Filtros y paginación.
+  -Filtros y paginación.
   
 #### 4.1.2  Evitar la duplicación innecesaria.
 
