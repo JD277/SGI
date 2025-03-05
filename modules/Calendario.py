@@ -1,6 +1,6 @@
 import streamlit as st
 from datetime import datetime
-from report import db  # Importa la conexión a Firestore desde report.py
+from modules.report import db  # Importa la conexión a Firestore desde report.py
 from streamlit_calendar import calendar
 
 def obtener_reportes():
