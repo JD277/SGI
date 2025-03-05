@@ -1,5 +1,5 @@
 import streamlit as st
-import modules.objetivo as objetivo
+import objetivo as objetivo
 from PIL import Image
 
 banner1 = Image.open('images/banner1.jpeg')
