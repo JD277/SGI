@@ -1,6 +1,8 @@
 import streamlit as st
 import random
 from firebase_admin import firestore
+from pdf import *
+
 
 db = firestore.client()
 
@@ -25,6 +27,10 @@ def mostrar_reporte(reporte):
     st.write(f":blue[Prioridad del Reporte:] {reporte['prioridad_del_reporte']}")
     st.write(f":blue[Descripción:] {reporte['descripcion']}")
 
+def crearTextPDF(reporte):
+    body= "Numero de Reporte: " + {reporte['numero_de_reporte']} 
+    return body      
+
 def menu():
     st.title('Buscar Reporte por Número')
     
@@ -45,3 +51,18 @@ def menu():
             mostrar_reporte(reporte)
         else:
             st.error('No se encontró ningún reporte con ese número.')
+
+    if st.button("Generar PDF"):
+        reporte = buscar_reporte(tipo_reporte, numero_reporte)
+        if reporte is not None:
+            texto = contenido(reporte)
+            crear_pdf(texto)
+        with open("reporte.pdf", "rb") as pdf_file:
+            PDFbyte = pdf_file.read()
+
+        st.download_button(
+            label="Descargar PDF",
+            data=PDFbyte,
+            file_name="reporte.pdf",
+            mime='application/octet-stream'
+        )
