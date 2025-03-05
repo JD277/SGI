@@ -89,7 +89,7 @@ def mostrar_resumen(datos):
 
 def menu():
     fecha_hora = fecha()
-    menu = ['Reportes de Agua', 'Reportes de Salud', 'Reportes de Electricidad', "Calendario de Reportes"]  # Eliminé la opción "Ver Reportes", (Angel: Añadí la opción ver calendario)
+    menu = ['Reportes de Agua', 'Reportes de Salud', 'Reportes de Electricidad', 'Reportes de Vialidad', 'Reportes de Educacion', 'Reportes de Comunicacion', 'Reportes de Transpote', 'Reportes de Seguridad', 'Reportes de Saneamiento', "Calendario de Reportes"]  # Eliminé la opción "Ver Reportes", (Angel: Añadí la opción ver calendario)
     st.sidebar.title(':blue-background[Menu de Reportes]')
     choice = st.sidebar.selectbox('Seleccione una opción', menu, index=0)
     
@@ -107,6 +107,25 @@ def menu():
         
     elif choice == 'Reportes de Electricidad':
         generar_reporte('Electricidad', ['Seleccione...','Apagon', 'Interrupciones Intermitentes' ,'Baja Tension', 'Sobrecargas', 'Caida de Poste', 'Caida de Cableado', 'Caida de Transformador', 'Averias en el Alumbrado Publico'])
+        
+    elif choice == 'Reportes de Vialidad':
+        generar_reporte('Vialidad', ['Seleccione...','Baches', 'Semaforos Averiados', 'Accidentes Viales', 'Obstruccion de Vias', 'Señalizacion Dañada', "Daños en puentes", "Daños en Paso Peatonales", "Falta de Pasos Peatonales"])
+        
+    elif choice == 'Reportes de Educacion':
+        generar_reporte('Educacion', ['Seleccione...', "Falta de Personal Docente", "Infraestructura Dañada", "Falta de Materiales Educativos", "Problemas de Saneamiento", "Cortes de Energia", "Falta de Agua", "Problemas de Transporte Escolar", "Problemas de Seguridad", "Falta de Mobiliario"])
+        
+    elif choice == 'Reportes de Comunicacion':
+        generar_reporte('Comunicacion', ['Seleccione...', "Cortes de Internet", "Problemas de Telefonia", "Falta de Señal de Television", "Averias en Redes de Comunicacion", "Problemas de Radio", "Falta de Equipos de Comunicacion", "Interrupciones en Servicio"])
+        
+    elif choice == 'Reportes de Transpote':
+        generar_reporte('Transporte', ['Seleccione...', "Retrasos en Rutas", "Falta de Unidades", "Problemas de Seguridad", "Averias en Vehiculos", "Falta de Personal", "Problemas de Limpieza", "Problemas de Tarifa", "Problemas de Accesibilidad"])
+        
+    elif choice == 'Reportes de Seguridad':
+        generar_reporte('Seguridad', ['Seleccione...', "Robos", "Asaltos", "Amenazas", "Problemas de Violencia",  "Problemas de Drogas", "Problemas de Alcoholismo", "Problemas de Pandillas", "Problemas de Prostitucion", "Problemas de Vandalismo", "Problemas de Discriminacion", "Problemas de Acoso", "Problemas en Centro de Detencion", "Incendios", "Emergencias Medicas"])
+        
+    elif choice == 'Reportes de Saneamiento':
+        generar_reporte("Seguridad", ["Seleccione...", "Falta de Recoleccion de Basura", "Contenedores Llenos", "Residuos en la Via Publica", "Problemas de Reciclaje", "Vertederos Ilegales", "Problemas con Camiones de Basura", "Malos Olores", "Problemas de Limpieza en Espacios Publicos"])
+        #(Jhuliana: Añadi nuevas opciones de reportes)
     
     elif choice == 'Calendario de Reportes':
         from Calendario import mostrar_calendario
