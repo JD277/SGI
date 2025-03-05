@@ -1,15 +1,15 @@
 import streamlit as st
-import modules.objetivo as objetivo
+import objetivo as objetivo
 from PIL import Image
 
-banner1 = Image.open('banner1.jpeg')
+banner1 = Image.open('images/banner1.jpeg')
 width, heigth = banner1.size
 new_height = 600
 new_width = 1920
 new_banner1 = banner1.resize((new_width, new_height))
 
-img1 = Image.open('img1.png')
-img2 = Image.open('img2.png')
+img1 = Image.open('images/img1.png')
+img2 = Image.open('images/img2.png')
 
 def inicio():
     st.image(new_banner1)

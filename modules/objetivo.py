@@ -1,14 +1,14 @@
 import streamlit as st
 from PIL import Image
 
-banner2 = Image.open('banner2.jpg')
+banner2 = Image.open('images/banner2.jpg')
 width, heigth = banner2.size
 new_height = 600
 new_width = 1920
 new_banner2 = banner2.resize((new_width, new_height))
 
-img3 = Image.open('img3.png')
-img4 = Image.open('img4.png')
+img3 = Image.open('images/img3.png')
+img4 = Image.open('images/img4.png')
 
 def obj():
     st.title('Monitoreo y Reportes de Incidencias en Servicios Públicos')
