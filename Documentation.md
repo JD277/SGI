@@ -23,7 +23,7 @@ El siguiente contenido explicará el funcionamiento del codigo en el directorio 
 - Descripción de cada función del sistema
 
 
-**Objective:** `SGI` integra metodos de Firebase, Matplotlib, Pandas y demás dependencias para llevar a cabo la gestión de una Base de Datos de reportes relacionados con servicios públicos, permitiendo solucionar las incidencias de una forma rápida y eficiente.
+**Objetivo:** `SGI` integra metodos de Firebase, Matplotlib, Pandas y demás dependencias para llevar a cabo la gestión de una Base de Datos de reportes relacionados con servicios públicos, permitiendo solucionar las incidencias de una forma rápida y eficiente.
 
 ---
 
