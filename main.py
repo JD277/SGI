@@ -102,12 +102,12 @@ from firebase_admin import credentials
 if not firebase_admin._apps:
     cred = credentials.Certificate('firebase_config.json')  
     firebase_admin.initialize_app(cred)
-import inicio
-import objetivo
-import report
-import monitoreo
-import tablas
-import metricas
+import modules.inicio as inicio
+import modules.objetivo as objetivo
+import modules.report as report
+import modules.monitoreo as monitoreo
+import modules.tablas as tablas
+import modules.metricas as metricas
 
 st.set_page_config(page_title='Gestion de Servicios Publicos', layout='centered', initial_sidebar_state='collapsed')
 

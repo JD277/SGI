@@ -1,7 +1,7 @@
 import streamlit as st
 import random
 from firebase_admin import firestore
-from pdf import *
+from modules.pdf import *
 
 
 db = firestore.client()

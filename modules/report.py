@@ -128,5 +128,5 @@ def menu():
         #(Jhuliana: Añadi nuevas opciones de reportes)
     
     elif choice == 'Calendario de Reportes':
-        from Calendario import mostrar_calendario
+        from modules.Calendario import mostrar_calendario
         mostrar_calendario() # Añadidura de la muestra del calendario
