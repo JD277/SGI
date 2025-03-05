@@ -1,3 +1,4 @@
 _pycache_
 env
 .venv
+firebase_config.json
