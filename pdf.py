@@ -6,17 +6,17 @@ db = firestore.client()
     
 def contenido(reporte):
     st.success('Se ha generado un PDF:')
-    num =  f"Numero de roporte: {reporte['numero_de_reporte']}"
-    fechaRep =  f"fecha del reporte: {reporte['fecha_del_reporte']}"
-    tipoAveria=  f"tipo de averia: {reporte['tipo_de_averia']}"
-    fechaAveria =  f"fecha de averia: {reporte['fecha_de_la_averia']}"
-    horaAveria =  f"hora de averia: {reporte['hora_de_la_averia']}"
+    num_reporte =  f"Numero de roporte: {reporte['numero_de_reporte']}"
+    fecha_reporte =  f"fecha del reporte: {reporte['fecha_del_reporte']}"
+    tipo_averia=  f"tipo de averia: {reporte['tipo_de_averia']}"
+    fecha_averia =  f"fecha de averia: {reporte['fecha_de_la_averia']}"
+    hora_averia =  f"hora de averia: {reporte['hora_de_la_averia']}"
     ciudad =  f"ciudad: {reporte['ciudad']}"
     direccion = f"Direccion: {reporte['direccion']}"
     prioridad =  f"Prioridad del reporte: {reporte['prioridad_del_reporte']}"
     descripcion =  f"Descripcion: {reporte['descripcion']}"
 
-    texto = f"DATOS DEL REPORTE:\n\n{num}\n{fechaRep}\n{tipoAveria}\n{fechaAveria}\n{horaAveria}\n{ciudad}\n{direccion}\n{prioridad}\n{descripcion}"
+    texto = f"DATOS DEL REPORTE:\n\n{num_reporte}\n{fecha_reporte}\n{tipo_averia}\n{fecha_averia}\n{hora_averia}\n{ciudad}\n{direccion}\n{prioridad}\n{descripcion}"
     return texto
 
 class PDF(FPDF):
