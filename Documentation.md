@@ -77,9 +77,9 @@ El siguiente contenido explicará el funcionamiento del codigo en el directorio 
 | Name         | Args | Return          | Description     |
 |--------------|------|--------------|--------------|
 | `obtener_reportes  ` |    ` tipo_reporte`: Determina qué colección de reportes se va a acceder en la base de datos.   |   Los datos de todos los documentos en la colección especificada  |  Recupera todos los documentos de una colección en una base de datos y devuelve un DataFrame de pandas con los datos de esos documentos.|
-|  ` grafico_reportes_por_ciudad(df) `  |   ` df`:  DataFrame que contiene los datos de reportes, incluyendo una columna ciudad | None | Muestra un gráfico de barras con la cantidad de reportes por ciudad |
-|   `grafico_reportes_por_tipo_averia(df) `  |  ` df  `: DataFrame que  contiene una columna llamada tipo_de_averia  |None|  Muestra un gráfico de barras con la cantidad de reportes por tipo de avería|
-|  ` grafico_evolucion_temporal(df) `  | ` df`: DataFrame que contiene una columna llamada fecha_del_reporte | None| Muestra un gráfico de líneas que representa la evolución de reportes a lo largo del tiempo |
+|  ` grafico_reportes_por_ciudad(df) `  |   ` df`: Contiene los datos de reportes, incluyendo una columna ciudad | None | Muestra un gráfico de barras con la cantidad de reportes por ciudad |
+|   `grafico_reportes_por_tipo_averia(df) `  |  ` df  `: Contiene una columna llamada tipo_de_averia  |None|  Muestra un gráfico de barras con la cantidad de reportes por tipo de avería|
+|  ` grafico_evolucion_temporal(df) `  | ` df`: Contiene una columna llamada fecha_del_reporte | None| Muestra un gráfico de líneas que representa la evolución de reportes a lo largo del tiempo |
 |  ` menu() `| None  | None | Crea una interfaz de usuario para el análisis de reportes, permitiendo al usuario seleccionar un tipo de reporte y generando gráficos basados en los datos obtenidos.|
 
 
@@ -87,7 +87,7 @@ El siguiente contenido explicará el funcionamiento del codigo en el directorio 
 
 | Name         | Args | Return          | Description     |
 |--------------|------|--------------|--------------|
-|   ` mostrar_reportes_como_tabla(tipo_reporte)`  | `tipo_reporte `: Tipo de informacion consultar en la base de datos. | None   |Recupera y muestra los reportes de un tipo específico en formato de tabla utilizando Streamlit.|
+| `mostrar_reportes_como_tabla(tipo_reporte)`  | `tipo_reporte `: Tipo de informacion consultar en la base de datos. | None   |Recupera y muestra los reportes de un tipo específico en formato de tabla utilizando Streamlit.|
 |  ` main()` |None | None  |Configura el panel de reportes en una aplicación Streamlit, mostrando imágenes y botones para diferentes tipos de reportes.|
 
 >### Calendario.py 
