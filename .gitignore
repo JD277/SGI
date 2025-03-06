@@ -2,3 +2,4 @@ _pycache_
 env
 .venv
 modules/_pycache_
+keys.env
