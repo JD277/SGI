@@ -1,13 +1,16 @@
 import streamlit as st
 import pandas as pd
+import Clasificacion.clasificacion as cl
+import random
+import Clasificacion.Conversion as con
+import json
 from PIL import Image
 from firebase_admin import firestore
 
 db = firestore.client()
 
-img1 = Image.open('img5.png')
-img2 = Image.open('img6.png')
-img3 = Image.open('img8.png')
+img = [Image.open('img5.png'), Image.open('img6.png'), Image.open('img8.png')]
+
 
 def mostrar_reportes_como_tabla(tipo_reporte):
     reportes_ref = db.collection(tipo_reporte)
@@ -20,29 +23,43 @@ def mostrar_reportes_como_tabla(tipo_reporte):
         return
     
     df = pd.DataFrame(reportes_lista)
+
+    df = cl.mostrar_con_filtro(df)
     
     st.write(f"Reportes de {tipo_reporte}:")
     st.dataframe(df)
 
 def main():
     st.title('Panel de Reportes')
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.image(img1, width=800)
-        bot1 = st.button('Mostrar', key = 'Agua')
-    with col2:
-        st.image(img2, width=800)
-        bot2 = st.button('Mostrar', key = 'Electricidad')
-    with col3:
-        st.image(img3, width=700)
-        bot3 = st.button('Mostrar', key = 'Salud')
 
-    if bot1:
-        mostrar_reportes_como_tabla('Agua')
+    index = 0
+    seleccion = st.selectbox('Elija el servicio a inspeccionar',('Agua','Electricidad','Salud'),index= None, placeholder= 'Seleccione un servicio')
+    columnas= st.columns(len(img))
+
+    for columna in columnas:
+        with columna:
+            st.image(img[index], width= 750)
+            index += 1
+
+    if seleccion != None:
+        check = st.checkbox("¿Filtrar datos?", help= '''Si desea ordenar algún dato en particular
+                            de mayor a menor o viceversa, presione en el label''')
+        
+        if check:
+
+            #Se muestra una tabla del servicio seleccionado 
+            #TODO: Agregar opcion para mostrar una tabla con todos los servicios a la vez
+            match seleccion:
+
+                case 'Agua':
+                    mostrar_reportes_como_tabla('Agua')
+
+                case 'Electricidad':
+                    mostrar_reportes_como_tabla('Electricidad')
+
+                case 'Salud':
+                    mostrar_reportes_como_tabla('Salud')
+
     
-    elif bot2:
-        mostrar_reportes_como_tabla('Electricidad')
     
-    elif bot3:
-        mostrar_reportes_como_tabla('Salud')
+
