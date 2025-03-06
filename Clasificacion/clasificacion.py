@@ -4,7 +4,8 @@ from pandas.api.types import(
     is_object_dtype,
     is_numeric_dtype,
     is_datetime64_dtype,
-    is_string_dtype
+    is_string_dtype,
+    is_datetime64_any_dtype
 )
 
 def mostrar_con_filtro(df: pd.DataFrame):
@@ -34,7 +35,13 @@ def mostrar_con_filtro(df: pd.DataFrame):
 
                 df = df[df[columna].between(*deslizador)]
 
-            elif is_datetime64_dtype(df[columna]):
-                pass
+            elif is_datetime64_any_dtype(df[columna]):
+                fecha = st.date_input(f'Seleccione las fechas de {columna}',
+                                      value= (df[columna].min(), df[columna].max()))
+                
+                if len(fecha) == 2:
+                    fecha = tuple(map(pd.to_datetime,fecha))
+                    inicio, fin = fecha
+                    df = df[df[columna].between(inicio,fin)]
 
     return df

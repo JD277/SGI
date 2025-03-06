@@ -4,6 +4,7 @@ import Clasificacion.clasificacion as cl
 import random
 import Clasificacion.Conversion as con
 import json
+import datetime
 from PIL import Image
 from firebase_admin import firestore
 
@@ -23,11 +24,19 @@ def mostrar_reportes_como_tabla(tipo_reporte):
         return
     
     df = pd.DataFrame(reportes_lista)
+    
+    df['fecha_de_la_averia'] = pd.to_datetime(df['fecha_de_la_averia'])
+    df['fecha_del_reporte'] = pd.to_datetime(df['fecha_del_reporte'])
 
-    df = cl.mostrar_con_filtro(df)
+    check = st.checkbox("¿Filtrar datos?", help= '''Si desea ordenar algún dato en particular
+                            de mayor a menor o viceversa, presione en el label''')
+    
+    if check:
+        df = cl.mostrar_con_filtro(df)
     
     st.write(f"Reportes de {tipo_reporte}:")
     st.dataframe(df)
+
 
 def main():
     st.title('Panel de Reportes')
@@ -42,23 +51,19 @@ def main():
             index += 1
 
     if seleccion != None:
-        check = st.checkbox("¿Filtrar datos?", help= '''Si desea ordenar algún dato en particular
-                            de mayor a menor o viceversa, presione en el label''')
-        
-        if check:
+ 
+        #Se muestra una tabla del servicio seleccionado 
+        #TODO: Agregar opcion para mostrar una tabla con todos los servicios a la vez
+        match seleccion:
 
-            #Se muestra una tabla del servicio seleccionado 
-            #TODO: Agregar opcion para mostrar una tabla con todos los servicios a la vez
-            match seleccion:
+            case 'Agua':
+                mostrar_reportes_como_tabla('Agua')
 
-                case 'Agua':
-                    mostrar_reportes_como_tabla('Agua')
+            case 'Electricidad':
+                mostrar_reportes_como_tabla('Electricidad')
 
-                case 'Electricidad':
-                    mostrar_reportes_como_tabla('Electricidad')
-
-                case 'Salud':
-                    mostrar_reportes_como_tabla('Salud')
+            case 'Salud':
+                mostrar_reportes_como_tabla('Salud')
 
     
     
