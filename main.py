@@ -2,7 +2,7 @@ import streamlit as st
 import firebase_admin
 from firebase_admin import credentials
 if not firebase_admin._apps:
-    cred = credentials.Certificate('firebase_config.json')  
+    cred = credentials.Certificate('modules/database/university.json')  
     firebase_admin.initialize_app(cred)
 import modules.inicio as inicio
 import modules.objetivo as objetivo

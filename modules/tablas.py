@@ -5,9 +5,9 @@ from firebase_admin import firestore
 
 db = firestore.client()
 
-img1 = Image.open('img5.png')
-img2 = Image.open('img6.png')
-img3 = Image.open('img8.png')
+img1 = Image.open('images/img5.png')
+img2 = Image.open('images/img6.png')
+img3 = Image.open('images/img8.png')
 
 def mostrar_reportes_como_tabla(tipo_reporte):
     reportes_ref = db.collection(tipo_reporte)
