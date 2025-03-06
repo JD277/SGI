@@ -32,7 +32,7 @@ class DbManager:
                 }
         """
         ref = db.reference('reports/')
-        data.status = "nuevo"
+        data['status'] = "nuevo"
         ref.push(data)
 
     def read_record(self):

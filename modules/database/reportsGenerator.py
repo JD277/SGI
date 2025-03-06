@@ -7,7 +7,7 @@ from dbmanager import DbManager
 
 # Configuración de Firebase
 CREDENTIAL_PATH = 'modules/database/university.json'
-DATABASE_URL = 'https://uneversity-d4c4b-default-rtdb.firebaseio.com/'
+DATABASE_URL = 'https://estructuras-9be66-default-rtdb.firebaseio.com/'
 db_manager = DbManager(CREDENTIAL_PATH, DATABASE_URL)
 
 # Listas de datos venezolanos
@@ -115,4 +115,4 @@ def generate_synthetic_reports(quantity=1000):
             print(f"Error al crear reporte: {e}")
 
 if __name__ == "__main__":
-    generate_synthetic_reports(1000)
+    generate_synthetic_reports(1000)   
