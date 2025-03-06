@@ -77,7 +77,8 @@ class DbManager:
             Dictionary containing the report data, or None if not found
         """
         ref = db.reference(f"reports/{id}")
-        return ref.get()
+        result = ref.get()
+        return result
     
     def get_report_by_city(self, city):
         """
