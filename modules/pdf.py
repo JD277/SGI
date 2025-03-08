@@ -1,12 +1,9 @@
 import streamlit as st
 from fpdf import FPDF
-from firebase_admin import firestore
 
-db = firestore.client()
-    
 def contenido(reporte):
     st.success('Se ha generado un PDF:')
-    num_reporte =  f"Numero de roporte: {reporte['numero_de_reporte']}"
+    num_reporte =  f"Numero de reporte: {reporte['numero_de_reporte']}"
     fecha_reporte =  f"fecha del reporte: {reporte['fecha_del_reporte']}"
     tipo_averia=  f"tipo de averia: {reporte['tipo_de_averia']}"
     fecha_averia =  f"fecha de averia: {reporte['fecha_de_la_averia']}"

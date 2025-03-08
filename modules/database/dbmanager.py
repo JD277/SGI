@@ -1,8 +1,8 @@
 import firebase_admin
 from firebase_admin import credentials, db
-
+from datetime import datetime
 class DbManager:
-    def __init__(self, credential, database_url):
+    def __init__(self, credential="modules/database/estructuras.json'", database_url="https://estructuras-9be66-default-rtdb.firebaseio.com/"):
         """
         Initialize Firebase connection
 
@@ -10,10 +10,13 @@ class DbManager:
             credential: Path to Firebase service account key
             database_url: Firebase Realtime Database URL
         """
-        cred = credentials.Certificate(credential)
-        firebase_admin.initialize_app(cred, {
-            'databaseURL': database_url
-        })
+        if not firebase_admin._apps:
+            cred = credentials.Certificate(credential)
+            firebase_admin.initialize_app(
+                cred,
+                {'databaseURL': database_url}
+            )
+
 
     def write_record(self, data):
         """
@@ -242,4 +245,4 @@ class DbManager:
         except Exception as e:
             print(f"Error retrieving completed reports: {e}")
             return []
-    
+        

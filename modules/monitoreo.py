@@ -2,36 +2,30 @@ import streamlit as st
 import random
 from firebase_admin import firestore
 from modules.pdf import *
+from modules.database.dbmanager import DbManager
+from datetime import datetime
 
-
-db = firestore.client()
-
-def buscar_reporte(tipo_reporte, numero_reporte):
-    reportes_ref = db.collection(tipo_reporte)
-    query = reportes_ref.where('numero_de_reporte', '==', numero_reporte).get()
-    
-    if query:
-        reporte = query[0].to_dict()
-        return reporte
-    return None
+def buscar(num):
+    global db_manager
+    result = db_manager.get_report_by_id(num)
+    return result
 
 def mostrar_reporte(reporte):
     st.success('Reporte encontrado:')
-    st.write(f":blue[Número de Reporte:] {reporte['numero_de_reporte']}")
-    st.write(f":blue[Fecha del Reporte:] {reporte['fecha_del_reporte']}")
-    st.write(f":blue[Tipo de Avería:] {reporte['tipo_de_averia']}")
-    st.write(f":blue[Fecha de la Avería:] {reporte['fecha_de_la_averia']}")
-    st.write(f":blue[Hora de la Avería:] {reporte['hora_de_la_averia']}")
-    st.write(f":blue[Ciudad:] {reporte['ciudad']}")
-    st.write(f":blue[Dirección:] {reporte['direccion']}")
+    st.write(f":blue[Fecha del Reporte:] {reporte['date_of_record']}")
+    st.write(f":blue[Fecha de la Avería:] {reporte['date_of_failure']}")
+    st.write(f":blue[Ciudad:] {reporte['city']}")
+    st.write(f":blue[Dirección:] {reporte['street']}")
     st.write(f":blue[Prioridad del Reporte:] {reporte['prioridad_del_reporte']}")
-    st.write(f":blue[Descripción:] {reporte['descripcion']}")
+    st.write(f":blue[Descripción:] {reporte['description']}")
 
 def crearTextPDF(reporte):
     body= "Numero de Reporte: " + {reporte['numero_de_reporte']} 
     return body      
 
 def menu():
+    db_manager = DbManager('modules/database/estructuras.json', 'https://estructuras-9be66-default-rtdb.firebaseio.com/',f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+
     st.title('Buscar Reporte por Número')
     
     tipo_reporte = st.selectbox(
@@ -39,21 +33,18 @@ def menu():
         ['Agua', 'Salud', 'Electricidad']
     )
     
-    numero_reporte = st.number_input(
-        'Ingrese el número de reporte:',
-        min_value=1,
-        step=1
-    )
+    numero_reporte = st.text_input('Ingrese el número de reporte:', key="numero_reporte")
     
     if st.button('Buscar Reporte'):
-        reporte = buscar_reporte(tipo_reporte, numero_reporte)
+        reporte = buscar(numero_reporte)
+        print(reporte)
         if reporte is not None:
             mostrar_reporte(reporte)
         else:
             st.error('No se encontró ningún reporte con ese número.')
 
     if st.button("Generar PDF"):
-        reporte = buscar_reporte(tipo_reporte, numero_reporte)
+        reporte = buscar(numero_reporte)
         if reporte is not None:
             texto = contenido(reporte)
             crear_pdf(texto)
