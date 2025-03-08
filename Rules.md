@@ -21,6 +21,8 @@ Evitar nombres genericos como x, dato.
 
 Usar docstrings en formato Google Style:
 
+ 	python
+  
 	def sumatoria(num1,num2):
 	  '''Realiza la suma de una serie de numeros
 		Args:
@@ -31,6 +33,8 @@ Usar docstrings en formato Google Style:
 
 Usar # para comentarios de una sola línea:
 
+	python
+  	
 	def sumatoria(num1,num2):
 		#Realiza la suma de una serie de numeros
 		return num1 + num2	
@@ -57,6 +61,8 @@ PascalCase para clases.
 
 snake_case para métodos.
 
+	python
+ 
 	class ProcesadorDatos:
 		def __init__(self, datos):
 			self.datos = datos
@@ -68,6 +74,8 @@ snake_case para métodos.
 Métodos especiales:
 Documentar **init**, **str** y métodos mágicos.
 
+	python
+ 
 	class Usuario:
 		def __init__(self, nombre, edad):
 			'''Constructor de la clase Usuario.'''
@@ -80,11 +88,15 @@ Mutable Defaults:
 
 #### Incorrecto (lista como valor por defecto)
 
+	python
+ 
 	def añadir(valor, inventario = []):
 	  inventario.append(valor)
 
 #### Correcto:
 
+	python
+ 
 	def añadir(valor, inventario):
 	  inventario = inventario or []
 	  inventario.append(valor)
@@ -103,6 +115,9 @@ Mutable Defaults:
 	##### 2.1 Dividir funciones largas:
 
 		Ejemplo Antes:
+
+   		python
+
 		def process_data(raw_data):
 			#Paso 1: Limpiar datos
 			limpio = []
@@ -124,6 +139,8 @@ Mutable Defaults:
 
 Ejemplo: Despues:
 
+	python
+ 
 	def clean_data(raw_data):
 		'''Filtra y limpia los datos crudos.'''
 		cleaned = []
@@ -151,6 +168,8 @@ Si un bloque maneja multiples propiedades y comportamientos, usa clases.
 
 Ejemplo:
 
+	python
+ 
 	class DataProcessor:
 		def __init__(self, raw_data):
 			self.raw_data = raw_data
@@ -189,6 +208,8 @@ Ejemplo:
 
 **Ejemplo**: Separar operaciones en funciones específicas.
 
+	python
+ 
 	from PIL import Image
 	
 	def redimensionar(img, ancho, alto):
@@ -199,6 +220,8 @@ Ejemplo:
 
 ##### 2.1 Validación de Parámetros
 
+	python
+
 	from typing import Tuple
 	
 	def redimensionar(img, tamaño: Tuple[int,int]):
@@ -208,6 +231,8 @@ Ejemplo:
 	
 ### 3. Ejemplo de Flujo de Trabajo Modular
 
+	python
+ 
 	import cargar_imagen
 	import resize
 	
@@ -262,6 +287,8 @@ Ejemplo:
 ##### 2.1 Cierre de figuras.
 
 Siempre cerrar figuras después de guardar
+
+	python
 
 	fig, ax = plt.subplots()
 	ax.plot(x, y)

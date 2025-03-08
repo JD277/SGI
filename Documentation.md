@@ -1,18 +1,27 @@
 # Documentación para SGI
 ##  Estructura del directorio
-Los archivos .py están orgaizados de la siguiente forma:
+Los archivos están orgaizados de la siguiente forma:
 ```
 SGI/
-├── app.py
-├── Calendario.py
-├── inicio.py
-├── main.py
-├── metricas.py
-├── monitoreo.py
-├── objetivo.py
-├── pdf.py
-├── report.py
-├── tablas.py
+├──images
+├──modules/
+│   ├── database/
+│   │       ├──db.manager.py
+│   │       ├──estructuras.json
+│   │       └──reportsGenerator.py
+│   ├── Calendario.py
+│   ├── geminiAnalizer.py
+│   ├── inicio.py
+│   ├── metricas.py
+│   ├── monitoreo.py
+│   ├── objetivo.py
+│   ├── pdf.py
+│   ├── report.py
+│   └──tablas.py
+├── Documentation.md
+├── README.md
+├── Rules.md
+└── main.py
 ```
 
 ## SGI
@@ -49,6 +58,19 @@ El siguiente contenido explicará el funcionamiento del codigo en el directorio 
 | `make_report(tipo_reporte, opciones_averia)`   |`tipo_reporte`: Contiene el tipo especifico de reporte de avería <br><br>`opciones_averia`:  Contiene las distintas averias que pueden ocurrir |None.| Obtiene la fecha y hora actual, posteriormente procesa la información del reporte, el tipo del mismo, generando un número de reporte, finalmente verifica que los datos sean correctos y en cuyo caso lo almacena y lo muestra al usuario.|
 | `mostrar_resumen(datos)`   |`datos`: Contiene la información del reporte|None.|Recopila los datos del reporte generado y los muestra al usuario.|
 | `menu()`   |None|None.|Obtiene la fecha y hora actual, crea una interfaz de usuario en la cual se puede escoger el tipo de averia de la cual se desea realizar el reporte.|
+
+### **Generador de reportes**:
+
+
+##### Comprede la documentación del archivo:
+`reportsGenerator.py`
+
+| **Name**         | **Args** | **Return**          | **Description**     |
+|--------------|------|--------------|--------------|
+| `generate_random_date()`|None|Un valor de tiempo en días|Se encarga de generar fechas aleatorias entre 2020 y 2023 en formato UNIX|
+| `generate_priority(date, description)` |`date`: La fecha de la avería<br><br> `description`: Descripción específica del reporte|Nivel de prioridad (alto/medio/bajo)|Asigna la prioridad en base a la descripción del reporte|
+| `generate_report()` |None|Un reporte con todos los datos relevantes de la avería (fecha, hora, ciudad, tipo de avería, prioridad)|Se encarga de generar los reportes|
+| `generate_synthetic_reports(quantity=1000)` |`quantity`: La cantidad de reportes a generar, incializada en 1000|None|Se encarga de generar reportes sintéticos|
 
 >## `Monitoreo.py`
 
