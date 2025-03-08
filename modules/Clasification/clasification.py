@@ -17,7 +17,7 @@ def mostrar_con_filtro(df: pd.DataFrame):
 
     with container:
         
-        columna_filtro = st.multiselect("Seleccione los filtros:", options=[df.columns[0],df.columns[1], df.columns[2], df.columns[3],df.columns[4], df.columns[5],df.columns[6]])
+        columna_filtro = st.multiselect("Seleccione los filtros:", options=[df.columns[0],df.columns[1], df.columns[2],df.columns[4], df.columns[5],df.columns[6]])
         
         for columna in columna_filtro:
 

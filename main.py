@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 st.set_page_config(page_title='Gestion de Servicios Publicos', layout='centered', initial_sidebar_state='collapsed')
 
 # import sqlite3
@@ -108,13 +109,21 @@ def get_db_manager():
     )
 
 db_manager = get_db_manager()
-
 import modules.inicio as inicio
 import modules.objetivo as objetivo
-# import modules.Buscar reporte as Buscar reporte
-# import modules.tablas as tablas
-# import modules.metricas as metricas
+@st.cache_resource
+def get_all():
+    reportes_lista = db_manager.read_record() 
+    reportes_final = []
+    for reporte in reportes_lista:
+            reportes_final.append(reportes_lista[reporte])
 
+    df = pd.DataFrame(reportes_final)
+        
+    df['date_of_failure'] = pd.to_datetime(df['date_of_failure'])
+    df['date_of_record'] = pd.to_datetime(df['date_of_record'])
+    return df
+df = get_all()
 
 def main():
     menu = ['Inicio', 'Objetivo', 'Reportar', 'Buscar reporte', 'Panel de Reportes', 'Metricas y Resultados', "Calendario de reportes"]
@@ -149,11 +158,13 @@ def main():
 
     elif choice.startswith(":material/browse_activity:"):
         from modules.tablas import Tables
-        tablas = Tables(db_manager)
+        tablas = Tables(df)
         tablas.main()
     
-    # elif choice.startswith(":material/trending_up:"):
-    #     metricas.menu() 
+    elif choice.startswith(":material/trending_up:"):
+        from modules.metricas import Statics
+        metricas = Statics(df)
+        metricas.menu() 
     elif choice.startswith(":material/calendar_month:"):
         from modules.Calendario import Calendar_screen
         calendario = Calendar_screen(db_manager)
