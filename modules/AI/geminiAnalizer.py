@@ -1,8 +1,6 @@
 import pandas as pd
 import google.generativeai as genai
-from typing import List, Dict, Optional, Union
-import os
-from database.dbmanager import DbManager
+from typing import  Dict, Optional
 class DataAnalyst:
     """
     Data analysis class using Google Generative AI for Firebase report data
@@ -10,7 +8,7 @@ class DataAnalyst:
     Args:
         api_key: Google Generative AI API key
     """
-    def __init__(self, api_key: str):
+    def __init__(self, api_key: str = "AIzaSyCTHoF8MX96j6309uMcNTS1ApRcMgf8mzE"):
         genai.configure(api_key=api_key)
         self.model = genai.GenerativeModel('gemini-2.0-flash')
         self.data = []  # Original data
@@ -68,48 +66,21 @@ class DataAnalyst:
             and all(item.get(k) == v for k, v in filters.items())
         ]
 
-    def analyze(self) -> Dict:
+    def analyze(self,df,prompt) -> Dict:
         """
         Generate AI-powered analysis of filtered data
         
         Returns:
             Dictionary containing analysis results and metadata
-        """
-        if not self.filtered_data:
-            return {"error": "No data to analyze"}
+        """ 
         
         # Convert to DataFrame for analysis
-        df = pd.DataFrame(self.filtered_data)
         sample_data = df.head().to_string()
         
-        prompt = f"""
-        Analyze this infrastructure report data:
-        {sample_data}
         
-        Provide:
-        1. Summary statistics
-        2. Pattern identification
-        3. Anomaly suggestions
-        4. Visualization recommendations
-        5. Actionable insights
-        6. Respond in Spanish
-        """
+        response = self.model.generate_content([sample_data,prompt, "Siempre responde en español"])
         
-        response = self.model.generate_content(prompt)
-        
-        # Time range analysis with validation
-        time_range = None
-        if self.date_column and self.date_column in df.columns:
-            time_range = {
-                "start": df[self.date_column].min(),
-                "end": df[self.date_column].max()
-            }
-
-        return {
-            "analysis": response.text,
-            "record_count": len(df),
-            "time_range": time_range
-        }
+        return response.text
     
 # analyst = DataAnalyst(api_key="API_KEY")
 # db_manager = DbManager("./modules/database/estructuras.json", "https://estructuras-9be66-default-rtdb.firebaseio.com/")

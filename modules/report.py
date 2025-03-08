@@ -1,8 +1,9 @@
 import streamlit as st
 from datetime import datetime
+from modules.database.dbmanager import DbManager
 
 class Report_screen:
-    def __init__(self, db_manager):
+    def __init__(self, db_manager:DbManager):
         self.db_manager = db_manager
         
     def fecha(self, ):

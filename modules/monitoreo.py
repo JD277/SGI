@@ -1,8 +1,9 @@
 import streamlit as st
 from modules.pdf import *
+from modules.database.dbmanager import DbManager
 
 class Monitor_screen():
-    def __init__(self, db_manager):
+    def __init__(self, db_manager:DbManager):
         self.db_manager = db_manager
     def buscar(self,num):
         result = self.db_manager.get_report_by_id(num)

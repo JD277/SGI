@@ -2,9 +2,10 @@ import streamlit as st
 from datetime import datetime
 from streamlit_calendar import calendar
 import time
+from modules.database.dbmanager import DbManager
 
 class Calendar_screen():
-    def __init__(self, db_manager):
+    def __init__(self, db_manager:DbManager):
         self.db_manager = db_manager
 
     def get_records(self):
