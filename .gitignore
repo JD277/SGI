@@ -3,3 +3,4 @@ env
 .venv
 modules/_pycache_
 keys.env
+modules/databse/estructuras.json
