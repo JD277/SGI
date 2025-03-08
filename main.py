@@ -109,7 +109,6 @@ db_manager = get_db_manager()
 
 import modules.inicio as inicio
 import modules.objetivo as objetivo
-from modules.report import Report_screen
 # import modules.monitoreo as monitoreo
 # import modules.tablas as tablas
 # import modules.metricas as metricas
@@ -117,14 +116,15 @@ from modules.report import Report_screen
 st.set_page_config(page_title='Gestion de Servicios Publicos', layout='centered', initial_sidebar_state='collapsed')
 
 def main():
-    menu = ['Inicio', 'Objetivo', 'Reportes', 'Monitoreo', 'Panel de Reportes', 'Metricas y Resultados']
+    menu = ['Inicio', 'Objetivo', 'Reportar', 'Monitoreo', 'Panel de Reportes', 'Metricas y Resultados', "Calendario de reportes"]
     icons = {
         "Inicio": ":material/house:",
         "Objetivo": ":material/emoji_objects:",
-        "Reportes": ":material/report:",
+        "Reportar": ":material/report:",
         "Monitoreo": ":material/monitoring:",
         "Panel de Reportes": ":material/browse_activity:",
-        "Metricas y Resultados": ":material/trending_up:"
+        "Metricas y Resultados": ":material/trending_up:",
+        "Calendario de reportes": ":material/calendar_month:"
     }
 
     st.sidebar.title(':blue-background[Menu de seleccion]')
@@ -137,6 +137,7 @@ def main():
         objetivo.obj()
 
     elif choice.startswith(":material/report:"):
+        from modules.report import Report_screen
         report = Report_screen(db_manager)
         report.menu()
 
@@ -148,6 +149,10 @@ def main():
     
     # elif choice.startswith(":material/trending_up:"):
     #     metricas.menu() 
+    elif choice.startswith(":material/calendar_month:"):
+        from modules.Calendario import Calendar_screen
+        calendario = Calendar_screen(db_manager)
+        calendario.show()
         
 if __name__ == '__main__':
     main()

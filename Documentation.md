@@ -76,7 +76,7 @@ El siguiente contenido explicará el funcionamiento del codigo en el directorio 
 
 | Name         | Args | Return          | Description     |
 |--------------|------|--------------|--------------|
-| `obtener_reportes  ` |    ` tipo_reporte`: Determina qué colección de reportes se va a acceder en la base de datos.   |   Los datos de todos los documentos en la colección especificada  |  Recupera todos los documentos de una colección en una base de datos y devuelve un DataFrame de pandas con los datos de esos documentos.|
+| `get_records  ` |    ` tipo_reporte`: Determina qué colección de reportes se va a acceder en la base de datos.   |   Los datos de todos los documentos en la colección especificada  |  Recupera todos los documentos de una colección en una base de datos y devuelve un DataFrame de pandas con los datos de esos documentos.|
 |  ` grafico_reportes_por_ciudad(df) `  |   ` df`: Contiene los datos de reportes, incluyendo una columna ciudad | None | Muestra un gráfico de barras con la cantidad de reportes por ciudad |
 |   `grafico_reportes_por_tipo_averia(df) `  |  ` df  `: Contiene una columna llamada tipo_de_averia  |None|  Muestra un gráfico de barras con la cantidad de reportes por tipo de avería|
 |  ` grafico_evolucion_temporal(df) `  | ` df`: Contiene una columna llamada fecha_del_reporte | None| Muestra un gráfico de líneas que representa la evolución de reportes a lo largo del tiempo |
@@ -94,6 +94,6 @@ El siguiente contenido explicará el funcionamiento del codigo en el directorio 
 
 | **Name**         | **Args** | **Return**          | **Description**     |
 |--------------|------|--------------|--------------|
-| `obtener_reportes()`  | None  | Lista de diccionarios, cada uno conteniendo los datos de un reporte junto con su tipo. | Recupera todos los reportes de diferentes tipos de una base de datos Firestore.|
-| `generar_eventos(reportes)`   |  `reportes`: Lista de diccionarios con información sobre averías (fecha, hora, tipo, prioridad y descripción). |Contiene todos los eventos que se han creado a partir de los reportes procesados.| Convierte una lista de reportes en eventos adecuados para un calendario, asignando colores a cada tipo de reporte.|
-| `mostrar_calendario()`   | None   |None|Crea un calendario interactivo para visualizar reportes de averías utilizando Streamlit.|
+| `get_records()`  | None  | Lista de diccionarios, cada uno conteniendo los datos de un reporte junto con su tipo. | Recupera todos los reportes de diferentes tipos de una base de datos Firestore.|
+| `generate_events(reportes)`   |  `reportes`: Lista de diccionarios con información sobre averías (fecha, hora, tipo, prioridad y descripción). |Contiene todos los eventos que se han creado a partir de los reportes procesados.| Convierte una lista de reportes en eventos adecuados para un calendario, asignando colores a cada tipo de reporte.|
+| `show()`   | None   |None|Crea un calendario interactivo para visualizar reportes de averías utilizando Streamlit.|

@@ -54,23 +54,44 @@ class Report_screen:
         fecha_averia, hora_averia, ciudad, direccion, descripcion = self.campos_comunes()
         descripcion = 'Tipo de averia: ' + tipo_de_averia + '  descripción:' + descripcion
         if st.button('Enviar Reporte'):
-            prioridad = "baja"
-            if len(descripcion) > 50:
-                prioridad = 'high'
-            elif len(descripcion) > 30:
-                prioridad = 'medium'
+            prioridad = "low"
+            days = (fecha_averia - datetime.now().date()).days
+            high_keywords = ['urgente', 'emergencia', 'critico', 'inmediato']
+            medium_keywords = ['importante', 'prioritario', 'necesario']
+            for word in high_keywords:
+                if word in descripcion.lower() or days > 50:
+                    prioridad = 'high'
+                    if self.validate_data(tipo_de_averia, descripcion, ciudad, direccion):
+                        datos = {
+                                "city": ciudad,
+                                "date_of_record": fecha_hora,
+                                "date_of_failure": fecha_averia.strftime("%Y-%m-%d %H:%M:%S"),
+                                "description": descripcion,
+                                "service": tipo_reporte,
+                                "street": direccion,
+                                "priority": prioridad
+                            }
+                        self.report(datos)
+                        return
 
-            if self.validate_data(tipo_de_averia, descripcion, ciudad, direccion):
-                datos = {
-                        "city": ciudad,
-                        "date_of_record": fecha_hora,
-                        "date_of_failure": fecha_averia.strftime("%Y-%m-%d %H:%M:%S"),
-                        "description": descripcion,
-                        "service": tipo_reporte,
-                        "street": direccion,
-                        "priority": prioridad
-                    }
-                self.report(datos)
+            for word in medium_keywords:
+                if word in descripcion.lower() or days > 30:
+                    prioridad = 'medium'
+                    if self.validate_data(tipo_de_averia, descripcion, ciudad, direccion):
+                        datos = {
+                                "city": ciudad,
+                                "date_of_record": fecha_hora,
+                                "date_of_failure": fecha_averia.strftime("%Y-%m-%d %H:%M:%S"),
+                                "description": descripcion,
+                                "service": tipo_reporte,
+                                "street": direccion,
+                                "priority": prioridad
+                            }
+                        self.report(datos)                    
+                        break
+  
+
+
 
 
     def mostrar_resumen(self, datos):
@@ -122,5 +143,6 @@ class Report_screen:
             self.make_report("Seguridad", ["Seleccione...", "Falta de Recoleccion de Basura", "Contenedores Llenos", "Residuos en la Via Publica", "Problemas de Reciclaje", "Vertederos Ilegales", "Problemas con Camiones de Basura", "Malos Olores", "Problemas de Limpieza en Espacios Publicos"])
         
         elif choice == 'Calendario de Reportes':
-            from modules.Calendario import mostrar_calendario
-            mostrar_calendario() # Añadidura de la muestra del calendario
+            from modules.Calendario import Calendar_screen
+            calendario = Calendar_screen(self.db_manager)
+            calendario.show() # Añadidura de la muestra del calendario

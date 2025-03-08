@@ -5,7 +5,7 @@ from firebase_admin import firestore
 
 db = firestore.client()
 
-def obtener_reportes(tipo_reporte):
+def get_records(tipo_reporte):
     reportes_ref = db.collection(tipo_reporte)
     reportes = reportes_ref.stream()
     reportes_lista = [reporte.to_dict() for reporte in reportes]
@@ -35,7 +35,7 @@ def menu():
         ['Agua', 'Salud', 'Electricidad']
     )
     
-    df = obtener_reportes(tipo_reporte)
+    df = get_records(tipo_reporte)
     
     if not df.empty:
         grafico_reportes_por_ciudad(df)
