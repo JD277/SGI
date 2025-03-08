@@ -56,7 +56,6 @@ El siguiente contenido explicará el funcionamiento del codigo en el directorio 
 |--------------|------|--------------|--------------|
 | `buscar_reporte(tipo_reporte, numero_reporte)`|  `tipo_reporte`: Un string que indica el tipo de reporte a buscar en la colección.<br><br> `numero_reporte` Un valor que representa el número único del reporte que se desea encontrar:  |None   |Busca un reporte específico en la base de datos utilizando el tipo de reporte y el número de reporte como criterios de búsqueda.|
 | `mostrar_reporte(reporte)`   |  `reporte`:Es un  diccionario que contiene los detalles del reporte que se desea mostrar, incluyendo información como el número, fecha, tipo de avería, y más.   |None |  Muestra la información detallada de un reporte encontrado en la interfaz de usuario utilizando Streamlit|
-| `crearTextPDF(reporte)`   |`reporte`: Un diccionario que contiene los detalles del reporte del cual se desea generar el texto. |Cadena de texto que contiene la información del número de reporte.|  Crea un texto que representa la información esencial de un reporte, que puede ser utilizado para generar un archivo PDF.|
 |` menu() ` |None|None| Crea una interfaz para buscar un reporte por número y tipo, y generar un PDF del reporte encontrado.|
 
 

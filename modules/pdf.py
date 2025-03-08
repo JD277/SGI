@@ -1,19 +1,38 @@
 import streamlit as st
 from fpdf import FPDF
-
-def contenido(reporte):
+import time
+def unix_to_string_time(ts):
+        try:
+            return time.strftime(
+                "%Y-%m-%d %H:%M:%S",
+                time.gmtime(ts)  # UTC
+            )
+        except Exception as e:
+            return f"Error: {e}"
+def contenido(report,id):
     st.success('Se ha generado un PDF:')
-    num_reporte =  f"Numero de reporte: {reporte['numero_de_reporte']}"
-    fecha_reporte =  f"fecha del reporte: {reporte['fecha_del_reporte']}"
-    tipo_averia=  f"tipo de averia: {reporte['tipo_de_averia']}"
-    fecha_averia =  f"fecha de averia: {reporte['fecha_de_la_averia']}"
-    hora_averia =  f"hora de averia: {reporte['hora_de_la_averia']}"
-    ciudad =  f"ciudad: {reporte['ciudad']}"
-    direccion = f"Direccion: {reporte['direccion']}"
-    prioridad =  f"Prioridad del reporte: {reporte['prioridad_del_reporte']}"
-    descripcion =  f"Descripcion: {reporte['descripcion']}"
+    num_reporte =  f"Numero de reporte: {id}"
+    fecha_reporte = 0
+    fecha_averia = 0
+    if type(report['date_of_failure']) == int:
+        report['date_of_failure'] = unix_to_string_time(report['date_of_failure'])
+        fecha_averia =  f"fecha de averia: {report['date_of_failure']}"
+    else:
+        fecha_averia =  f"fecha de averia: {report['date_of_failure']}"
 
-    texto = f"DATOS DEL REPORTE:\n\n{num_reporte}\n{fecha_reporte}\n{tipo_averia}\n{fecha_averia}\n{hora_averia}\n{ciudad}\n{direccion}\n{prioridad}\n{descripcion}"
+    if type(report['date_of_record']) == int:
+        report['date_of_record'] = unix_to_string_time(report['date_of_record'])
+        fecha_reporte =  f"fecha del reporte: {report['date_of_record']}"
+    else:
+        fecha_reporte =  f"fecha del reporte: {report['date_of_record']}"
+
+    tipo_averia=  f"Servicio: {report['service']}"
+    ciudad =  f"ciudad: {report['city']}"
+    direccion = f"Direccion: {report['street']}"
+    prioridad =  f"Prioridad del reporte: {report['priority']}"
+    descripcion =  f"Descripcion: {report['description']}"
+
+    texto = f"DATOS DEL REPORTE:\n\n{num_reporte}\n{fecha_reporte}\n{tipo_averia}\n{fecha_averia}\n{ciudad}\n{direccion}\n{prioridad}\n{descripcion}"
     return texto
 
 class PDF(FPDF):
@@ -38,7 +57,7 @@ def crear_pdf(dato):
     pdf = PDF()
     pdf.add_page()
     pdf.text(dato)
-    pdf.logo("logopdf.png", 80,0,0,50)
+    pdf.logo("images/logopdf.png", 80,0,0,50)
     pdf.titles("Reporte de servicio publico")
     pdf.output("reporte.pdf", 'F')
     

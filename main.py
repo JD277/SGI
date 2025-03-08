@@ -109,19 +109,19 @@ db_manager = get_db_manager()
 
 import modules.inicio as inicio
 import modules.objetivo as objetivo
-# import modules.monitoreo as monitoreo
+# import modules.Buscar reporte as Buscar reporte
 # import modules.tablas as tablas
 # import modules.metricas as metricas
 
 st.set_page_config(page_title='Gestion de Servicios Publicos', layout='centered', initial_sidebar_state='collapsed')
 
 def main():
-    menu = ['Inicio', 'Objetivo', 'Reportar', 'Monitoreo', 'Panel de Reportes', 'Metricas y Resultados', "Calendario de reportes"]
+    menu = ['Inicio', 'Objetivo', 'Reportar', 'Buscar reporte', 'Panel de Reportes', 'Metricas y Resultados', "Calendario de reportes"]
     icons = {
         "Inicio": ":material/house:",
         "Objetivo": ":material/emoji_objects:",
         "Reportar": ":material/report:",
-        "Monitoreo": ":material/monitoring:",
+        "Buscar reporte": ":material/search:",
         "Panel de Reportes": ":material/browse_activity:",
         "Metricas y Resultados": ":material/trending_up:",
         "Calendario de reportes": ":material/calendar_month:"
@@ -141,8 +141,10 @@ def main():
         report = Report_screen(db_manager)
         report.menu()
 
-    # elif choice.startswith(":material/monitoring:"):
-    #     monitoreo.menu()
+    elif choice.startswith(":material/search:"):
+        from modules.monitoreo import Monitor_screen
+        monitoreo = Monitor_screen(db_manager)
+        monitoreo.menu()
 
     # elif choice.startswith(":material/browse_activity:"):
     #     tablas.main()

@@ -52,7 +52,7 @@ class Report_screen:
         
         tipo_de_averia = st.selectbox(f'Seleccione el tipo de averia :red[*]', opciones_averia, index=0)
         fecha_averia, hora_averia, ciudad, direccion, descripcion = self.campos_comunes()
-        descripcion = 'Tipo de averia: ' + tipo_de_averia + '  descripción:' + descripcion
+        descripcion = '| Tipo de averia: ' + tipo_de_averia + ' | descripción: ' + descripcion
         if st.button('Enviar Reporte'):
             prioridad = "low"
             days = (fecha_averia - datetime.now().date()).days

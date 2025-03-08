@@ -26,8 +26,8 @@ class DbManager:
             data: Dictionary containing report information:
                 {
                     "city": str,
-                    "date_of_record": int,
-                    "date_of_failure": int,
+                    "date_of_record": str,
+                    "date_of_failure": str,
                     "description": str,
                     "service": str,
                     "street": str,
