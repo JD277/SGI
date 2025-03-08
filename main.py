@@ -1,4 +1,6 @@
 import streamlit as st
+st.set_page_config(page_title='Gestion de Servicios Publicos', layout='centered', initial_sidebar_state='collapsed')
+
 # import sqlite3
 # import random
 # import string
@@ -113,7 +115,6 @@ import modules.objetivo as objetivo
 # import modules.tablas as tablas
 # import modules.metricas as metricas
 
-st.set_page_config(page_title='Gestion de Servicios Publicos', layout='centered', initial_sidebar_state='collapsed')
 
 def main():
     menu = ['Inicio', 'Objetivo', 'Reportar', 'Buscar reporte', 'Panel de Reportes', 'Metricas y Resultados', "Calendario de reportes"]
@@ -146,8 +147,10 @@ def main():
         monitoreo = Monitor_screen(db_manager)
         monitoreo.menu()
 
-    # elif choice.startswith(":material/browse_activity:"):
-    #     tablas.main()
+    elif choice.startswith(":material/browse_activity:"):
+        from modules.tablas import Tables
+        tablas = Tables(db_manager)
+        tablas.main()
     
     # elif choice.startswith(":material/trending_up:"):
     #     metricas.menu() 

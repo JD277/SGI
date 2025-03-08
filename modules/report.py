@@ -52,7 +52,7 @@ class Report_screen:
         
         tipo_de_averia = st.selectbox(f'Seleccione el tipo de averia :red[*]', opciones_averia, index=0)
         fecha_averia, hora_averia, ciudad, direccion, descripcion = self.campos_comunes()
-        descripcion = '| Tipo de averia: ' + tipo_de_averia + ' | descripción: ' + descripcion
+        descripcion = '| Tipo de averia: ' + tipo_de_averia + ' | Descripción: ' + descripcion
         if st.button('Enviar Reporte'):
             prioridad = "low"
             days = (fecha_averia - datetime.now().date()).days
@@ -140,9 +140,5 @@ class Report_screen:
             self.make_report('Seguridad', ['Seleccione...', "Robos", "Asaltos", "Amenazas", "Problemas de Violencia",  "Problemas de Drogas", "Problemas de Alcoholismo", "Problemas de Pandillas", "Problemas de Prostitucion", "Problemas de Vandalismo", "Problemas de Discriminacion", "Problemas de Acoso", "Problemas en Centro de Detencion", "Incendios", "Emergencias Medicas"])
             
         elif choice == 'Reportes de Saneamiento':
-            self.make_report("Seguridad", ["Seleccione...", "Falta de Recoleccion de Basura", "Contenedores Llenos", "Residuos en la Via Publica", "Problemas de Reciclaje", "Vertederos Ilegales", "Problemas con Camiones de Basura", "Malos Olores", "Problemas de Limpieza en Espacios Publicos"])
+            self.make_report("Saneamiento", ["Seleccione...", "Falta de Recoleccion de Basura", "Contenedores Llenos", "Residuos en la Via Publica", "Problemas de Reciclaje", "Vertederos Ilegales", "Problemas con Camiones de Basura", "Malos Olores", "Problemas de Limpieza en Espacios Publicos"])
         
-        elif choice == 'Calendario de Reportes':
-            from modules.Calendario import Calendar_screen
-            calendario = Calendar_screen(self.db_manager)
-            calendario.show() # Añadidura de la muestra del calendario

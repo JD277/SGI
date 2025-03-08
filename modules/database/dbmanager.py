@@ -1,6 +1,6 @@
 import firebase_admin
 from firebase_admin import credentials, db
-from datetime import datetime
+import time
 class DbManager:
     def __init__(self, credential="modules/database/estructuras.json'", database_url="https://estructuras-9be66-default-rtdb.firebaseio.com/"):
         """
@@ -16,7 +16,14 @@ class DbManager:
                 cred,
                 {'databaseURL': database_url}
             )
-
+    def unix_to_string_time(self,ts):
+        try:
+            return time.strftime(
+                "%Y-%m-%d %H:%M:%S",
+                time.gmtime(ts)  # UTC
+            )
+        except Exception as e:
+            return f"Error: {e}"
 
     def write_record(self, data):
         """
@@ -109,7 +116,11 @@ class DbManager:
         """
         ref = db.reference(f"reports/")
         reports = ref.get() or {}
-        return [v for v in reports.values() if v.get('service') == service]
+        if reports == {}:
+            return []
+        reports_list = [v for v in reports.values() if v.get('service') == service]
+
+        return reports_list
     
     def get_report_by_priority(self, priority):
         """
