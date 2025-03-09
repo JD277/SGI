@@ -1,4 +1,7 @@
 # SGI
+<div style="text-align: center;">
+    <img src="images/logopdf.png" alt="Logo del proyecto" style="max-width: 30%; height: auto; border: 2px solid #ccc; border-radius: 10px;">
+</div>
 
 ## Descripción del Proyecto
 
