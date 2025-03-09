@@ -1,107 +1,9 @@
 import streamlit as st
 import pandas as pd
+from modules.database.dbmanager import DbManager
 st.set_page_config(page_title='Gestion de Servicios Publicos', layout='centered', initial_sidebar_state='collapsed')
 
-# import sqlite3
-# import random
-# import string
-# import bcrypt
-
-# # Crea la base de datos 
-# conn = sqlite3.connect('users.db')
-# c = conn.cursor()
-# c.execute('''
-#     CREATE TABLE IF NOT EXISTS admins (
-#         id INTEGER PRIMARY KEY AUTOINCREMENT,
-#         username TEXT NOT NULL UNIQUE,
-#         password TEXT NOT NULL,
-#         first_name TEXT NOT NULL,
-#         last_name TEXT NOT NULL,
-#         email TEXT NOT NULL,
-#         id_number TEXT NOT NULL
-#     )
-# ''')
-# conn.commit()
-
-# # Funciones para registrar y verificar credenciales
-# def register_admin(username, password, first_name, last_name, email, id_number):
-#     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-#     c.execute('INSERT INTO admins (username, password, first_name, last_name, email, id_number) VALUES (?, ?, ?, ?, ?, ?)',
-#               (username, hashed_password, first_name, last_name, email, id_number))
-#     conn.commit()
-
-# def login_admin(username, password):
-#     c.execute('SELECT password FROM admins WHERE username = ?', (username,))
-#     stored_password = c.fetchone()
-#     if stored_password and bcrypt.checkpw(password.encode('utf-8'), stored_password[0]):
-#         return True
-#     return False
-
-# def generate_temp_password(length=8):
-#     characters = string.ascii_letters + string.digits
-#     return ''.join(random.choice(characters) for i in range(length))
-
-# # Interfaz 
-# st.title("Sistema de Reportes de Servicios Públicos")
-# user_type = st.radio("Ingresar como:", ("Usuario", "Administrador"))
-
-# def admin_ui():
-#     st.subheader("Inicio de sesión para administradores")
-#     auth_mode = st.selectbox("¿Qué desea hacer?", ["Iniciar sesión", "Registrar nuevo administrador"])
-
-#     if auth_mode == "Registrar nuevo administrador":
-#         first_name = st.text_input("Nombres")
-#         last_name = st.text_input("Apellidos")
-#         new_username = st.text_input("Nombre de usuario")
-#         new_password = st.text_input("Contraseña", type="password")
-#         confirm_password = st.text_input("Confirmar contraseña", type="password")
-#         email = st.text_input("Correo")
-#         id_number = st.text_input("Cédula")
-#         if st.button("Registrar"):
-#             if new_password == confirm_password and new_username and new_password and first_name and last_name and email and id_number:
-#                 try:
-#                     register_admin(new_username, new_password, first_name, last_name, email, id_number)
-#                     st.success("Administrador registrado con éxito")
-#                 except sqlite3.IntegrityError:
-#                     st.error("El nombre de usuario ya existe")
-#             elif new_password != confirm_password:
-#                 st.error("Las contraseñas no coinciden")
-#             else:
-#                 st.error("Todos los campos son obligatorios")
-
-#     elif auth_mode == "Iniciar sesión":
-#         username = st.text_input("Nombre de usuario")
-#         password = st.text_input("Contraseña", type="password")
-#         if st.button("Iniciar sesión"):
-#             if login_admin(username, password):
-#                 st.success("Inicio de sesión exitoso")
-#                 st.write("Bienvenido, administrador")
-#                 # Aqui se puede añadir a donde se quiere redirigir la pagina cuando se ingrese como admin
-#             else:
-#                 st.error("Nombre de usuario o contraseña incorrectos")
-        
-#         # Opción de recuperar contraseña
-#         if st.button("Olvidé mi contraseña"):
-#             st.write("Ingrese su correo electrónico registrado para recuperar la contraseña.")
-#             recover_email = st.text_input("Correo electrónico")
-#             if st.button("Enviar"):
-#                 temp_password = generate_temp_password()
-#                 st.success(f"Su nueva contraseña temporal es: {temp_password}")
-#                 c.execute('UPDATE admins SET password = ? WHERE email = ?', (bcrypt.hashpw(temp_password.encode('utf-8'), bcrypt.gensalt()), recover_email))
-#                 conn.commit()
-
-# def user_ui():
-#     st.subheader("Bienvenido, Usuario")
-#     st.write("Esta sección está reservada para funcionalidades de usuarios.")
-#     # Aqui se puede añadir a donde se quiere redirigir la pagina cuando se ingrese como usuario
-# if user_type == "Administrador":
-#     admin_ui()
-# else:
-#     user_ui()
-
-# conn.close()
-from modules.database.dbmanager import DbManager
-@st.cache_resource  # ¡Muy importante!
+@st.cache_resource
 def get_db_manager():
     return DbManager(
         'modules/database/estructuras.json',
@@ -109,8 +11,6 @@ def get_db_manager():
     )
 
 db_manager = get_db_manager()
-import modules.inicio as inicio
-import modules.objetivo as objetivo
 @st.cache_resource
 def get_all():
     reportes_lista = db_manager.read_record() 
@@ -124,26 +24,42 @@ def get_all():
     df['date_of_record'] = pd.to_datetime(df['date_of_record'])
     return df
 df = get_all()
+if 'user_type' not in st.session_state:
+    st.session_state.user_type = None  # Estado del usuario (admin o None)
 
 def main():
-    menu = ['Inicio', 'Objetivo', 'Reportar', 'Buscar reporte', 'Panel de Reportes', 'Metricas y Resultados', "Calendario de reportes"]
-    icons = {
-        "Inicio": ":material/house:",
-        "Objetivo": ":material/emoji_objects:",
-        "Reportar": ":material/report:",
-        "Buscar reporte": ":material/search:",
-        "Panel de Reportes": ":material/browse_activity:",
-        "Metricas y Resultados": ":material/trending_up:",
-        "Calendario de reportes": ":material/calendar_month:"
-    }
-
-    st.sidebar.title(':blue-background[Menu de seleccion]')
+    global state
+    if st.session_state.user_type == 'admin':
+        menu = ['Inicio', 'Objetivo', 'Reportar', 'Buscar reporte', 'Panel de Reportes', 'Metricas y Resultados', 'Calendario de reportes','Cerrar sesión','Registrar Administrador']
+        icons = {
+            "Inicio": ":material/house:",
+            "Objetivo": ":material/emoji_objects:",
+            "Reportar": ":material/report:",
+            "Buscar reporte": ":material/search:",
+            "Panel de Reportes": ":material/browse_activity:",
+            "Metricas y Resultados": ":material/trending_up:",
+            "Calendario de reportes": ":material/calendar_month:",
+            "Cerrar sesión": ":material/logout:",
+            "Registrar Administrador": ":material/account_circle:"
+        }
+    else:
+        menu = ['Inicio', 'Objetivo', 'Reportar', 'Buscar reporte','Iniciar sesión']
+        icons = {
+            "Inicio": ":material/house:",
+            "Objetivo": ":material/emoji_objects:",
+            "Reportar": ":material/report:",
+            "Buscar reporte": ":material/search:",
+            "Iniciar sesión": ":material/account_circle:"
+        }
+    st.sidebar.title(':material/menu: Menu de seleccion')
     choice = st.sidebar.radio('Seleccione una opcion', [f"{icons[item]} {item}" for item in menu])
 
     if choice.startswith(":material/house:"):
+        import modules.inicio as inicio
         inicio.inicio()
 
     elif choice.startswith(":material/emoji_objects:"):
+        import modules.objetivo as objetivo
         objetivo.obj()
 
     elif choice.startswith(":material/report:"):
@@ -165,10 +81,23 @@ def main():
         from modules.metricas import Statics
         metricas = Statics(df)
         metricas.menu() 
+
     elif choice.startswith(":material/calendar_month:"):
         from modules.Calendario import Calendar_screen
         calendario = Calendar_screen(db_manager)
         calendario.show()
+
+    elif choice.startswith(":material/account_circle:"):
+        from modules.database.auth import Auth
+        auth = Auth()
+        if st.session_state.user_type != 'admin':
+            auth.admin_ui('Iniciar sesión')
+        else:
+            auth.admin_ui('Registrar')
+
+    elif choice.startswith(":material/logout:"):
+        st.session_state.user_type = None  # Cerrar sesión
+        st.rerun()  # Recargar la página
         
 if __name__ == '__main__':
     main()

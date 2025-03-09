@@ -1,5 +1,5 @@
 import streamlit as st
-from modules.pdf import *
+from modules.PDF.pdf import *
 from modules.database.dbmanager import DbManager
 
 class Monitor_screen():

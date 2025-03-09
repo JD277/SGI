@@ -14,9 +14,9 @@ img2 = Image.open('images/img2.png')
 def inicio():
     st.image(new_banner1)
     col1,col2,col3 = st.columns(3)
+
     with col2:
-        boton = st.button("Conoce mas sobre el proyecto", key = 'Proyecto')
-    
+        boton = st.button("Conoce más sobre nuestro proyecto", key = 'Proyecto')
     if boton:
         objetivo.obj()
     
