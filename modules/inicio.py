@@ -2,10 +2,10 @@ import streamlit as st
 import modules.objetivo as objetivo
 from PIL import Image
 
-banner1 = Image.open('images/banner1.jpeg')
+banner1 = Image.open('images/logopdf.png')
 width, heigth = banner1.size
-new_height = 600
-new_width = 1920
+new_height = 800
+new_width = 1720
 new_banner1 = banner1.resize((new_width, new_height))
 
 img1 = Image.open('images/img1.png')

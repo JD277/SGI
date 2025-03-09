@@ -22,8 +22,10 @@ def get_all():
         
     df['date_of_failure'] = pd.to_datetime(df['date_of_failure'])
     df['date_of_record'] = pd.to_datetime(df['date_of_record'])
-    return df
-df = get_all()
+    return [df,reportes_final]
+data = get_all()
+df = data[0]
+all_data = data[1]
 if 'user_type' not in st.session_state:
     st.session_state.user_type = None  # Estado del usuario (admin o None)
 
@@ -51,6 +53,7 @@ def main():
             "Buscar reporte": ":material/search:",
             "Iniciar sesión": ":material/account_circle:"
         }
+    st.sidebar.image('images/logopdf.png', width=200)
     st.sidebar.title(':material/menu: Menu de seleccion')
     choice = st.sidebar.radio('Seleccione una opcion', [f"{icons[item]} {item}" for item in menu])
 
@@ -84,7 +87,7 @@ def main():
 
     elif choice.startswith(":material/calendar_month:"):
         from modules.Calendario import Calendar_screen
-        calendario = Calendar_screen(db_manager)
+        calendario = Calendar_screen(all_data)
         calendario.show()
 
     elif choice.startswith(":material/account_circle:"):

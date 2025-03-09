@@ -5,21 +5,8 @@ import time
 from modules.database.dbmanager import DbManager
 
 class Calendar_screen():
-    def __init__(self, db_manager:DbManager):
-        self.db_manager = db_manager
-
-    def get_records(self):
-        """Obtiene todos los reportes de Firestore"""
-        ids = self.db_manager.read_record()
-        all = []
-        for id in ids:
-            report = ids[id]
-            if type(report['date_of_failure']) == int:
-               report['date_of_failure'] = self.unix_to_string_time(report['date_of_failure'])
-            if type(report['date_of_record']) == int:
-               report['date_of_record'] = self.unix_to_string_time(report['date_of_record'])
-            all.append(report)
-        return all
+    def __init__(self, all_data:list):
+        self.all_data = all_data
 
     def generate_events(self, reportes):
         """Convierte los reportes en eventos para el calendario"""
@@ -32,7 +19,6 @@ class Calendar_screen():
         eventos = []
         for reporte in reportes:
             try:
-                # Combina la fecha y hora del reporte
                 fecha_str = reporte['date_of_failure']
                 
                 eventos.append({
@@ -48,20 +34,13 @@ class Calendar_screen():
             except Exception as e:
                 st.error(f"Error procesando reporte: {e}")
         return eventos
-    def unix_to_string_time(self,ts):
-        try:
-            return time.strftime(
-                "%Y-%m-%d %H:%M:%S",
-                time.gmtime(ts)  # UTC
-            )
-        except Exception as e:
-            return f"Error: {e}"
+    
     def show(self,):
         """Muestra el calendario interactivo con Streamlit"""
         st.title("🗓️ Calendario de Reportes")
         
         # Obtiene y procesa datos
-        reportes = self.get_records()
+        reportes = self.all_data
         eventos = self.generate_events(reportes)
         
         # Configura el calendario (eliminamos el eventClick de las opciones)
