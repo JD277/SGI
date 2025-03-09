@@ -10,13 +10,13 @@ class Report_screen:
         return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     def report(self, datos):
-
+        id = None
         try:
-            self.db_manager.write_record(datos)
+            id = self.db_manager.write_record(datos)
             st.success(f"Reporte de {datos['service']} guardado correctamente")
         except Exception as e:
             st.error(f'Error al guardar el reporte: {e}')
-        self.mostrar_resumen(datos)
+        self.mostrar_resumen(datos, id)
 
     def campos_comunes(self):
         col1, col2 = st.columns(2)
@@ -59,44 +59,35 @@ class Report_screen:
             days = (fecha_averia - datetime.now().date()).days
             high_keywords = ['urgente', 'emergencia', 'critico', 'inmediato']
             medium_keywords = ['importante', 'prioritario', 'necesario']
+            check = True
             for word in high_keywords:
                 if word in descripcion.lower() or days > 50:
                     prioridad = 'high'
-                    if self.validate_data(tipo_de_averia, descripcion, ciudad, direccion):
-                        datos = {
-                                "city": ciudad,
-                                "date_of_record": fecha_hora,
-                                "date_of_failure": fecha_averia.strftime("%Y-%m-%d %H:%M:%S"),
-                                "description": descripcion,
-                                "service": tipo_reporte,
-                                "street": direccion,
-                                "priority": prioridad
-                            }
-                        self.report(datos)
-                        return
-
-            for word in medium_keywords:
-                if word in descripcion.lower() or days > 30:
-                    prioridad = 'medium'
-                    if self.validate_data(tipo_de_averia, descripcion, ciudad, direccion):
-                        datos = {
-                                "city": ciudad,
-                                "date_of_record": fecha_hora,
-                                "date_of_failure": fecha_averia.strftime("%Y-%m-%d %H:%M:%S"),
-                                "description": descripcion,
-                                "service": tipo_reporte,
-                                "street": direccion,
-                                "priority": prioridad
-                            }
-                        self.report(datos)                    
+                    check = False
+                    break
+            if check:
+                for word in medium_keywords:
+                    if word in descripcion.lower() or days > 30:
+                        prioridad = 'medium'
                         break
-  
+            if self.validate_data(tipo_de_averia, descripcion, ciudad, direccion):
+                        datos = {
+                                "city": ciudad,
+                                "date_of_record": fecha_hora,
+                                "date_of_failure": fecha_averia.strftime("%Y-%m-%d %H:%M:%S"),
+                                "description": descripcion,
+                                "service": tipo_reporte,
+                                "street": direccion,
+                                "priority": prioridad
+                            }
+                        self.report(datos)                 
 
 
 
 
-    def mostrar_resumen(self, datos):
+    def mostrar_resumen(self, datos,id):
         st.success('Reporte enviado correctamente')
+        st.write(f':blue[ID del reporte:] {id}')  # Cambia el nombre del campo
         st.write(f':blue[Hora y Fecha del reporte:] {datos["date_of_record"]}')  # Cambia el nombre del campo
         st.write(f':blue[Tipo de avería:] {datos["service"]}')
         st.write(f':blue[Fecha y hora de la avería:] {datos["date_of_failure"]}')

@@ -43,7 +43,8 @@ class DbManager:
         """
         ref = db.reference('reports/')
         data['status'] = "nuevo"
-        ref.push(data)
+        id = ref.push(data)
+        return id.key
 
     def read_record(self):
         """
